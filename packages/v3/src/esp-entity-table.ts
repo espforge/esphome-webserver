@@ -50,6 +50,7 @@ interface entityConfig {
   value_numeric_history: number[];
   uom?: string;
   is_disabled_by_default?: boolean;
+  temperature_unit?: string;
   // Water heater specific
   away?: boolean;
   is_on?: boolean;
@@ -771,8 +772,9 @@ class ActionRenderer {
   render_climate() {
     if (!this.entity) return;
     let target_temp_slider, target_temp_label, target_temp;
+    const temp_unit = this.entity.temperature_unit || '°C';
     let current_temp = html`<div class="climate-row" style="padding-bottom: 10px";>
-                              <label>Current:&nbsp;${this.entity.current_temperature} °C</label>
+                              <label>Current:&nbsp;${this.entity.current_temperature} ${temp_unit}</label>
                             </div>`;
     
     if (
@@ -850,9 +852,10 @@ class ActionRenderer {
     if (!this.entity) return;
 
     // Current temperature display (if available)
+    const temp_unit = this.entity.temperature_unit || '°C';
     let current_temp = this.entity.current_temperature !== undefined
       ? html`<div class="climate-row" style="padding-bottom: 10px">
-               <label>Current:&nbsp;${this.entity.current_temperature} °C</label>
+               <label>Current:&nbsp;${this.entity.current_temperature} ${temp_unit}</label>
              </div>`
       : nothing;
 
